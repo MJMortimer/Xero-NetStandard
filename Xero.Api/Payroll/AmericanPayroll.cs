@@ -9,7 +9,7 @@ using PayRun = Xero.Api.Payroll.America.Model.PayRun;
 
 namespace Xero.Api.Payroll
 {
-    public class AmericanPayroll : PayrollApi
+    public class AmericanPayroll : PayrollApi, IAmericanPayroll
     {
         public AmericanPayroll(IAuthenticator auth, IUser user = null, IRateLimiter rateLimiter = null)
             : base(auth, user, rateLimiter)

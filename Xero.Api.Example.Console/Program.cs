@@ -1,6 +1,8 @@
 ﻿using System;
-using Xero.Api.Core;
 using Xero.Api.Example.Console.Authenticators;
+using Xero.Api.Infrastructure.Applications.Partner;
+using Xero.Api.Infrastructure.Applications.Private;
+using Xero.Api.Infrastructure.Applications.Public;
 using Xero.Api.Infrastructure.OAuth;
 using MemoryTokenStore = Xero.Api.Example.Console.TokenStores.MemoryTokenStore;
 
@@ -15,7 +17,7 @@ namespace Xero.Api.Example.Console
             new Lister(api).List();
         }
 
-        private static IXeroCoreApi Initialise()
+        private static IXeroApi Initialise()
         {
             var settings = new XeroApiSettings();
 
@@ -31,37 +33,27 @@ namespace Xero.Api.Example.Console
             }
         }
 
-        private static IXeroCoreApi PrivateApp()
+        private static IXeroApi PrivateApp()
         {
-            return new Infrastructure.Applications.Private.Core
-            {
-                UserAgent = "Xero API - Listing example"
-            };
+            return new PrivateXeroApi(true, "Xero API - Listing Example");
         }
 
-        private static IXeroCoreApi PublicApp()
+        private static IXeroApi PublicApp()
         {
             var tokenStore = new MemoryTokenStore();
             var user = new ApiUser { Identifier = Environment.MachineName };
-
             var publicAuth = new PublicAuthenticator(tokenStore);
-            
-            return new Infrastructure.Applications.Public.Core(publicAuth, user)
-            {
-                UserAgent = "Xero API - Listing example"
-            };
+
+            return new PublicXeroApi(publicAuth, user, true, "Xero API - Listing example");
         }
 
-        private static IXeroCoreApi PartnerApp()
+        private static IXeroApi PartnerApp()
         {
             var tokenStore = new MemoryTokenStore();
             var user = new ApiUser { Identifier = Environment.MachineName };
             var partnerAuth = new PartnerAuthenticator(tokenStore);
 
-            return new Infrastructure.Applications.Partner.Core(partnerAuth, user)
-            {
-                UserAgent = "Xero API - Listing example"
-            };
+            return new PartnerXeroApi(partnerAuth, user, true, "Xero API - Listing example");
         }
     }
 }

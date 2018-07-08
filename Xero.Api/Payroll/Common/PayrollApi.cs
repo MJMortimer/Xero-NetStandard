@@ -5,7 +5,7 @@ using Xero.Api.Infrastructure.RateLimiter;
 
 namespace Xero.Api.Payroll.Common
 {
-    public abstract class PayrollApi : XeroApi
+    public abstract class PayrollApi : XeroApiBase
     {
         private static readonly XeroApiSettings ApplicationSettings = new XeroApiSettings();
 

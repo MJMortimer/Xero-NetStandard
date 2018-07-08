@@ -9,7 +9,7 @@ using PayRun = Xero.Api.Payroll.Australia.Model.PayRun;
 
 namespace Xero.Api.Payroll
 {
-    public class AustralianPayroll : PayrollApi
+    public class AustralianPayroll : PayrollApi, IAustralianPayroll
     {
         public AustralianPayroll(IAuthenticator auth, IUser user = null, IRateLimiter rateLimiter = null)
             : base(auth, user, rateLimiter)
